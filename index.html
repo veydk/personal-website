@@ -34,7 +34,30 @@
                 <p class="animate-fade-in delay-1">Creative Developer & Digital Storyteller</p>
                 <p class="animate-fade-in delay-2">Building worlds pixel by pixel</p>
                 <p class="animate-fade-in delay-1">I like to play creative peaceful</p>
-                <a href="#contact" class="cta-button animate-fade-in delay-2">Get in Touch</a>
+                <a href="#content" class="cta-button animate-fade-in delay-2">Check My Content</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="container">
+            <h2>About Me</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>I'm a passionate developer with a keen eye for design and a love for creating meaningful digital experiences.</p>
+                    <p>With experience in both frontend and backend development, I bring creative solutions to life through code.</p>
+                </div>
+                <div class="skills">
+                    <h3>Skills</h3>
+                    <div class="skills-grid">
+                        <span>Building Houses</span>
+                        <span>Making Aquariums</span>
+                        <span>Sculpting Animals</span>
+                        <span>Minecraft Modding</span>
+                        <span>Spawning Animals</span>
+                        <span>Pixel Art</span>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -99,43 +122,21 @@
         </div>
     </section>
 
-    <section id="about" class="about">
-        <div class="container">
-            <h2>About Me</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <p>I'm a passionate developer with a keen eye for design and a love for creating meaningful digital experiences.</p>
-                    <p>With experience in both frontend and backend development, I bring creative solutions to life through code.</p>
-                </div>
-                <div class="skills">
-                    <h3>Skills</h3>
-                    <div class="skills-grid">
-                        <span>Building Houses</span>
-                        <span>Making Aquariums</span>
-                        <span>Sculpting Animals</span>
-                        <span>Minecraft Modding</span>
-                        <span>Spawning Animals</span>
-                        <span>Pixel Art</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <section id="contact" class="contact">
         <div class="container">
             <h2>Get in Touch</h2>
-            <form class="contact-form">
+            <form id="contact-form" class="contact-form">
                 <div class="form-group">
-                    <input type="text" placeholder="Name" required>
+                    <input type="text" id="name" name="name" placeholder="Your Name" required>
                 </div>
                 <div class="form-group">
-                    <input type="email" placeholder="Email" required>
+                    <input type="email" id="email" name="email" placeholder="Your Email" required>
                 </div>
                 <div class="form-group">
-                    <textarea placeholder="Message" required></textarea>
+                    <textarea id="message" name="message" placeholder="Your Message" required></textarea>
                 </div>
                 <button type="submit" class="submit-button">Send Message</button>
+                <div id="form-message" class="form-message"></div>
             </form>
         </div>
     </section>
