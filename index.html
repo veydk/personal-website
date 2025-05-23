@@ -125,56 +125,7 @@
     <section id="contact" class="contact">
         <div class="container">
             <h2>Get in Touch</h2>
-            <form id="contact-form" class="contact-form">
-                <div class="form-group">
-                    <input type="text" id="name" name="name" placeholder="Your Name" required>
-                </div>
-                <div class="form-group">
-                    <input type="email" id="email" name="email" placeholder="Your Email" required>
-                </div>
-                <div class="form-group">
-                    <textarea id="message" name="message" placeholder="Your Message" required></textarea>
-                </div>
-                <button type="submit" class="submit-button">Send Message</button>
-                <div id="form-message" class="form-message"></div>
-            </form>
-
-            <script>
-                document.getElementById('contact-form').addEventListener('submit', async (e) => {
-                    e.preventDefault();
-                    const form = e.target;
-                    const formData = {
-                        name: form.name.value,
-                        email: form.email.value,
-                        message: form.message.value
-                    };
-
-                    try {
-                        const response = await fetch('https://api.github.com/repos/veydk/personal-website/dispatches', {
-                            method: 'POST',
-                            headers: {
-                                'Accept': 'application/vnd.github.v3+json',
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({
-                                event_type: 'email_submission',
-                                client_payload: formData
-                            })
-                        });
-
-                        if (!response.ok) {
-                            throw new Error(`HTTP error! status: ${response.status}`);
-                        }
-
-                        document.getElementById('form-message').textContent = 'Message sent successfully!';
-                        form.reset();
-                    } catch (error) {
-                        console.error('Error:', error);
-                        document.getElementById('form-message').textContent = 'Error sending message. Please try again.';
-                    }
-                });
-            </script>
-            </form>
+            <p>Email: <a href="mailto:captainveyd@gmail.com">captainveyd@gmail.com</a></p>
         </div>
     </section>
 
