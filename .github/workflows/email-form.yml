@@ -1,46 +1,36 @@
 name: Email Form Submission
 
 on:
-  workflow_dispatch:
-    inputs:
-      name:
-        description: 'Name'
-        required: true
-        type: string
-      email:
-        description: 'Email'
-        required: true
-        type: string
-      message:
-        description: 'Message'
-        required: true
-        type: string
+  repository_dispatch:
+    types: [email_submission]
 
 jobs:
   send-email:
     runs-on: ubuntu-latest
     env:
-      GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+      PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
       EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
     steps:
-      - name: Debug Inputs
+      - name: Debug Environment
         run: |
-          echo "Name: ${{ github.event.inputs.name }}"
-          echo "Email: ${{ github.event.inputs.email }}"
-          echo "Message: ${{ github.event.inputs.message }}"
+          echo "Running on: ${{ runner.os }}"
+          echo "GitHub Token: ${GITHUB_TOKEN:-'Not set'}"
+          echo "Email Password: ${EMAIL_PASSWORD:-'Not set'}"
+          echo "Event: ${{ toJson(github.event) }}"
 
       - name: Send Email
         run: |
           echo "Sending email..."
-          echo "Name: ${{ github.event.inputs.name }}" > email.txt
-          echo "Email: ${{ github.event.inputs.email }}" >> email.txt
-          echo "Message: ${{ github.event.inputs.message }}" >> email.txt
+          echo "Name: ${{ github.event.client_payload.name }}" > email.txt
+          echo "Email: ${{ github.event.client_payload.email }}" >> email.txt
+          echo "Message: ${{ github.event.client_payload.message }}" >> email.txt
           
-          curl -X POST \
-            -H "Authorization: token $GITHUB_TOKEN" \
+          echo "Making API request..."
+          curl -v -X POST \
+            -H "Authorization: token $PERSONAL_ACCESS_TOKEN" \
             -H "Accept: application/vnd.github.v3+json" \
             -H "Content-Type: application/json" \
-            --data '{"event_type": "email_submission", "client_payload": {"name": "${{ github.event.inputs.name }}", "email": "${{ github.event.inputs.email }}", "message": "${{ github.event.inputs.message }}"}}' \
+            --data '{"event_type": "email_submission", "client_payload": {"name": "${{ github.event.client_payload.name }}", "email": "${{ github.event.client_payload.email }}", "message": "${{ github.event.client_payload.message }}"}}' \
             https://api.github.com/repos/veydk/personal-website/dispatches
 
       - name: Log Success
@@ -50,6 +40,9 @@ jobs:
         if: ${{ failure() }}
         run: |
           echo "::error::Failed to send email"
-          echo "::error::Name: ${{ github.event.inputs.name }}"
-          echo "::error::Email: ${{ github.event.inputs.email }}"
-          echo "::error::Message: ${{ github.event.inputs.message }}"
+          echo "::error::Name: ${{ github.event.client_payload.name }}"
+          echo "::error::Email: ${{ github.event.client_payload.email }}"
+          echo "::error::Message: ${{ github.event.client_payload.message }}"
+          echo "::error::Environment:"
+          echo "::error::GITHUB_TOKEN: ${GITHUB_TOKEN:-'Not set'}"
+          echo "::error::EMAIL_PASSWORD: ${EMAIL_PASSWORD:-'Not set'}"
