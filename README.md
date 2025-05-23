@@ -1,31 +1,20 @@
-# Mallory Westwood - Personal Website
+# Veyd Kuchkula's Personal Website
 
-A modern, responsive personal website built with Next.js and Tailwind CSS.
+A Minecraft-themed personal portfolio website built with HTML, CSS, and JavaScript.
 
 ## Features
-- Modern, clean design
+- Clean, modern design with Minecraft-inspired theme
+- Smooth scrolling navigation
 - Responsive layout
-- Smooth animations
-- Fast performance
-- SEO optimized
+- Back to top functionality
+- Custom VK favicon
 
-## Getting Started
+## Project Structure
+- `index.html` - Main HTML file
+- `minecraft-theme.css` - Custom Minecraft-themed styles
+- `styles.css` - General styles
+- `scripts.js` - JavaScript functionality
+- `favicon.ico` - Custom VK favicon
 
-1. Install dependencies:
-```bash
-npm install
-```
-
-2. Run the development server:
-```bash
-npm run dev
-```
-
-3. Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-## Technologies Used
-- Next.js 14
-- React
-- Tailwind CSS
-- Framer Motion
-- Heroicons
+## How to View
+The website is hosted on GitHub Pages. Visit the live site at: [https://veyd-kuchkula.github.io/personal-website/](https://veyd-kuchkula.github.io/personal-website/)
