@@ -77,6 +77,45 @@ h1, h2, h3 {
     box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.2);
 }
 
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+}
+
+.video-item {
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.video-item h3 {
+    color: #8bbf41;
+    margin: 1rem 0;
+    font-size: 1.25rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.video-item p {
+    color: rgba(255, 255, 255, 0.95);
+    margin-bottom: 1rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.video-item h3 {
+    color: #8bbf41;
+    margin: 1rem 0;
+    font-size: 1.25rem;
+}
+
+.video-item p {
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 1rem;
+}
+
 /* Add Minecraft-style animations */
 @keyframes blocky {
     0% { transform: scale(1); }
