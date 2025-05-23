@@ -125,15 +125,16 @@
     <section id="contact" class="contact">
         <div class="container">
             <h2>Get in Touch</h2>
-            <form id="contact-form" class="contact-form">
+            <form id="contact-form" class="contact-form" action="https://github.com/veydk/personal-website/actions/workflows/email-form.yml/dispatches" method="POST">
+                <input type="hidden" name="workflow" value="email-form">
                 <div class="form-group">
-                    <input type="text" id="name" name="name" placeholder="Your Name" required>
+                    <input type="text" id="name" name="inputs[name]" placeholder="Your Name" required>
                 </div>
                 <div class="form-group">
-                    <input type="email" id="email" name="email" placeholder="Your Email" required>
+                    <input type="email" id="email" name="inputs[email]" placeholder="Your Email" required>
                 </div>
                 <div class="form-group">
-                    <textarea id="message" name="message" placeholder="Your Message" required></textarea>
+                    <textarea id="message" name="inputs[message]" placeholder="Your Message" required></textarea>
                 </div>
                 <button type="submit" class="submit-button">Send Message</button>
                 <div id="form-message" class="form-message"></div>
