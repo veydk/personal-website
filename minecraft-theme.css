@@ -79,8 +79,9 @@ h1, h2, h3 {
 
 .video-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 40px;
+    padding: 20px 0;
 }
 
 .video-item {
