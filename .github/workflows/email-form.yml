@@ -19,7 +19,15 @@ on:
 jobs:
   send-email:
     runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
+      - name: Debug Inputs
+        run: |
+          echo "Name: ${{ github.event.inputs.name }}"
+          echo "Email: ${{ github.event.inputs.email }}"
+          echo "Message: ${{ github.event.inputs.message }}"
+
       - name: Send Email
         uses: dawidd6/action-send-mail@v4
         with:
@@ -35,3 +43,14 @@ jobs:
             Email: ${{ github.event.inputs.email }}
             Message: ${{ github.event.inputs.message }}
           content_type: text/plain
+
+      - name: Log Success
+        run: echo "Email sent successfully"
+
+      - name: Handle Errors
+        if: ${{ failure() }}
+        run: |
+          echo "::error::Failed to send email"
+          echo "::error::Name: ${{ github.event.inputs.name }}"
+          echo "::error::Email: ${{ github.event.inputs.email }}"
+          echo "::error::Message: ${{ github.event.inputs.message }}"
