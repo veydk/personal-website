@@ -19,19 +19,20 @@ jobs:
           echo "Event: ${{ toJson(github.event) }}"
 
       - name: Send Email
-        run: |
-          echo "Sending email..."
-          echo "Name: ${{ github.event.client_payload.name }}" > email.txt
-          echo "Email: ${{ github.event.client_payload.email }}" >> email.txt
-          echo "Message: ${{ github.event.client_payload.message }}" >> email.txt
-          
-          echo "Sending email via SMTP..."
-          curl -v -X POST \
-            -H "Authorization: token $PERSONAL_ACCESS_TOKEN" \
-            -H "Accept: application/vnd.github.v3+json" \
-            -H "Content-Type: application/json" \
-            --data '{"event_type": "email_submission", "client_payload": {"name": "${{ github.event.client_payload.name }}", "email": "${{ github.event.client_payload.email }}", "message": "${{ github.event.client_payload.message }}"}}' \
-            https://api.github.com/repos/veydk/personal-website/dispatches
+        uses: dawidd6/action-send-mail@v4
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: captainveyd@gmail.com
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          to: captainveyd@gmail.com
+          from: ${{ github.event.client_payload.email }}
+          subject: "New Contact Form Submission from ${{ github.event.client_payload.name }}"
+          body: |
+            Name: ${{ github.event.client_payload.name }}
+            Email: ${{ github.event.client_payload.email }}
+            Message: ${{ github.event.client_payload.message }}
+          content_type: text/plain
 
       - name: Log Success
         run: echo "Email sent successfully"
