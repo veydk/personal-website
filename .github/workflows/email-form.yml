@@ -20,7 +20,8 @@ jobs:
   send-email:
     runs-on: ubuntu-latest
     env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+      EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
     steps:
       - name: Debug Inputs
         run: |
@@ -29,20 +30,18 @@ jobs:
           echo "Message: ${{ github.event.inputs.message }}"
 
       - name: Send Email
-        uses: dawidd6/action-send-mail@v4
-        with:
-          server_address: smtp.gmail.com
-          server_port: 587
-          username: captainveyd@gmail.com
-          password: ${{ secrets.EMAIL_PASSWORD }}
-          to: captainveyd@gmail.com
-          from: ${{ github.event.inputs.email }}
-          subject: "New Contact Form Submission from ${{ github.event.inputs.name }}"
-          body: |
-            Name: ${{ github.event.inputs.name }}
-            Email: ${{ github.event.inputs.email }}
-            Message: ${{ github.event.inputs.message }}
-          content_type: text/plain
+        run: |
+          echo "Sending email..."
+          echo "Name: ${{ github.event.inputs.name }}" > email.txt
+          echo "Email: ${{ github.event.inputs.email }}" >> email.txt
+          echo "Message: ${{ github.event.inputs.message }}" >> email.txt
+          
+          curl -X POST \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "Content-Type: application/json" \
+            --data '{"event_type": "email_submission", "client_payload": {"name": "${{ github.event.inputs.name }}", "email": "${{ github.event.inputs.email }}", "message": "${{ github.event.inputs.message }}"}}' \
+            https://api.github.com/repos/veydk/personal-website/dispatches
 
       - name: Log Success
         run: echo "Email sent successfully"
