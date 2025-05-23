@@ -14,7 +14,7 @@ jobs:
       - name: Debug Environment
         run: |
           echo "Running on: ${{ runner.os }}"
-          echo "GitHub Token: ${GITHUB_TOKEN:-'Not set'}"
+          echo "GitHub Token: ${PERSONAL_ACCESS_TOKEN:-'Not set'}"
           echo "Email Password: ${EMAIL_PASSWORD:-'Not set'}"
           echo "Event: ${{ toJson(github.event) }}"
 
@@ -25,7 +25,7 @@ jobs:
           echo "Email: ${{ github.event.client_payload.email }}" >> email.txt
           echo "Message: ${{ github.event.client_payload.message }}" >> email.txt
           
-          echo "Making API request..."
+          echo "Sending email via SMTP..."
           curl -v -X POST \
             -H "Authorization: token $PERSONAL_ACCESS_TOKEN" \
             -H "Accept: application/vnd.github.v3+json" \
@@ -44,5 +44,5 @@ jobs:
           echo "::error::Email: ${{ github.event.client_payload.email }}"
           echo "::error::Message: ${{ github.event.client_payload.message }}"
           echo "::error::Environment:"
-          echo "::error::GITHUB_TOKEN: ${GITHUB_TOKEN:-'Not set'}"
+          echo "::error::PERSONAL_ACCESS_TOKEN: ${PERSONAL_ACCESS_TOKEN:-'Not set'}"
           echo "::error::EMAIL_PASSWORD: ${EMAIL_PASSWORD:-'Not set'}"
